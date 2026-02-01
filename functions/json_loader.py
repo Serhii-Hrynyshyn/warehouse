@@ -1,6 +1,10 @@
 import json
 
 
-def open_json(filename) -> dict:
-    with open(filename, "r") as file:
-        return json.load(file)
+def open_json(filename):
+    try:
+        with open(filename, "r", encoding="utf8") as file:
+            data = json.load(file)
+        return data
+    except FileNotFoundError:
+        print("Error: The file 'data.json' was not found.")
