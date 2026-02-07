@@ -1,4 +1,4 @@
-from .safe_int_input import safe_input
+from .safe_input import safe_input
 from .get_current_time import get_current_time
 import sqlite3
 

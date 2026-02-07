@@ -1,4 +1,4 @@
-from .safe_int_input import safe_input
+from .safe_input import safe_input
 
 
 def to_out(db_connection, cursor):
