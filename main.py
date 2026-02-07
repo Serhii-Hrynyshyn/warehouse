@@ -3,21 +3,16 @@ from functions.json_loader import open_json
 from functions.menu_show import menu_show
 from functions.safe_int_input import safe_input
 from functions.show_all import show_all
+from functions.to_in import to_in
+from functions.to_out import to_out
 import sqlite3
-
-# text = open_json("functions/interface_texts/return_sale_buy_menu.json")
-# menu_show(text)
-# text = open_json("functions/interface_texts/main_menu.json")
-# menu_show(text)
-#
-# print(safe_input(float))
 
 
 def main() -> None:
     """
     first initial
     """
-    db_connection = sqlite3.connect("warehouse.db")
+    db_connection = sqlite3.connect("db.db")
     cursor = db_connection.cursor()
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS Goods(
@@ -25,8 +20,8 @@ def main() -> None:
         goods_name TEXT NOT NULL,
         goods_quantity INT NOT NULL,
         goods_price REAL NOT NULL,
-        action_date TEXT NOT NULL DEFAULT current_timestamp,
-        goods_description TEXT)
+        action_date datetime NOT NULL DEFAULT current_timestamp
+        )
         """)
     db_connection.commit()
 
@@ -37,24 +32,26 @@ def main() -> None:
         choice = safe_input(int)
         match choice:
             case 1:
-                cursor.execute(
-                    "INSERT INTO Goods (goods_name, goods_quantity, goods_price, action_date, goods_description ) VALUES (?, ?, ?, ?, ?)",
-                    ("newuser", 5, 12.3, get_current_time(), ""),
-                )
-
-                # Сохраняем изменения и закрываем соединение
-                # connection.commit()
-                # connection.close()
+                to_in(db_connection, cursor)
             case 2:
-                pass
+                to_out(db_connection, cursor)
+
             case 3:
                 pass
             case 4:
-                pass
+                print("Введіть номер номенклатури на видалення")
+                delete_id = safe_input(int)
+                db_connection.commit()
+                try:
+                    cursor.execute(f"DELETE FROM Goods WHERE ID = '{delete_id}'")
+                    db_connection.commit()
+                except Exception as e:
+                    print(e)
             case 5:
                 show_all(cursor)
             case 6:
-                pass
+                cursor.execute(f"DELETE FROM Goods")
+                db_connection.commit()
             case 7:
 
                 db_connection.commit()
