@@ -1,5 +1,7 @@
 from .safe_input import safe_input
-def to_delete(db_connection, cursor):
+
+
+def to_delete(db_connection, cursor) -> None:
     print("Введіть номер номенклатури на видалення")
     delete_id = safe_input(int)
     db_connection.commit()

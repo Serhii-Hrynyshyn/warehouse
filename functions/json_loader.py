@@ -1,7 +1,7 @@
 import json
 
 
-def open_json(filename):
+def open_json(filename: str) -> json:
     try:
         with open(filename, "r", encoding="utf8") as file:
             data = json.load(file)

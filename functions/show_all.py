@@ -1,4 +1,3 @@
-import sqlite3
 from .get_current_time import get_current_time
 
 

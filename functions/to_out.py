@@ -1,7 +1,7 @@
 from .safe_input import safe_input
 
 
-def to_out(db_connection, cursor):
+def to_out(db_connection, cursor) -> None:
     print("--- ПРОДАЖ ЗІ СКЛАДУ ---\n*Номер товару в базі*")
     number = safe_input(int)
     print("*Кількість товару*")
